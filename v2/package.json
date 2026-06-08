@@ -1,0 +1,31 @@
+{
+  "name": "bug-automation-workflow",
+  "version": "1.0.0",
+  "description": "Automated workflow to check Jira bugs and generate code solutions",
+  "main": "bug-workflow.js",
+  "scripts": {
+    "start": "node bug-workflow.js",
+    "test": "node bug-workflow.js --test",
+    "dev": "nodemon bug-workflow.js",
+    "setup": "bash setup-cron.sh"
+  },
+  "keywords": [
+    "jira",
+    "automation",
+    "bug",
+    "code-generation",
+    "claude-api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
