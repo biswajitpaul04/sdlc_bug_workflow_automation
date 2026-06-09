@@ -1,0 +1,146 @@
+[2026-06-09 11:41:43] INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.103:5000
+[2026-06-09 11:41:43] INFO: [33mPress CTRL+C to quit[0m
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:43] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:44] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:51] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:51] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:51] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:51] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:51] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:51] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:52] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:52] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:52] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:52] "GET /api/config HTTP/1.1" 200 -
+[2026-06-09 11:41:52] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:52] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:55] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:55] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:41:57] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:57] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:41:58] INFO: 127.0.0.1 - - [09/Jun/2026 11:41:58] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:01] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:01] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:02] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:02] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:04] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:04] "OPTIONS /api/trigger HTTP/1.1" 200 -
+[2026-06-09 11:42:04] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:04] "POST /api/trigger HTTP/1.1" 200 -
+[2026-06-09 11:42:04] INFO: ============================================================
+[2026-06-09 11:42:04] INFO: Starting bug workflow...
+[2026-06-09 11:42:04] INFO: ============================================================
+[2026-06-09 11:42:04] INFO: JQL Query: project = SCRUM AND status = "To Do" ORDER BY created DESC
+[2026-06-09 11:42:04] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:04] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:05] INFO: Received 1 total issues from Jira
+[2026-06-09 11:42:05] INFO: Processing issue 1: SCRUM-7
+[2026-06-09 11:42:05] INFO: ✓ Successfully parsed: SCRUM-7
+[2026-06-09 11:42:05] INFO: Found 1 issues with 'To Do' status
+[2026-06-09 11:42:05] INFO: 
+============================================================
+[2026-06-09 11:42:05] INFO: Processing bug 1/1: SCRUM-7
+[2026-06-09 11:42:05] INFO: ============================================================
+[2026-06-09 11:42:05] INFO: Bug: SCRUM-7 - Fix login button - add loading indicator
+[2026-06-09 11:42:05] INFO: Priority: Medium | Assigned to: Biswajit Paul
+[2026-06-09 11:42:05] INFO: Description: The login button should show a spinner while authenticating. GitHub file:https://raw.githubuserconte...
+[2026-06-09 11:42:05] INFO: Marking SCRUM-7 as In Progress...
+[2026-06-09 11:42:05] INFO: ✓ Marked SCRUM-7 as In Progress
+[2026-06-09 11:42:05] INFO: Step 1/3: Extracting GitHub URL...
+[2026-06-09 11:42:05] INFO: Found GitHub URL: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 11:42:05] INFO: ✓ GitHub URL found: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 11:42:05] INFO: Step 2/3: Fetching HTML file from GitHub...
+[2026-06-09 11:42:05] INFO: Fetching HTML from GitHub: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 11:42:06] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:06] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:06] INFO: ✓ Successfully fetched HTML file (8432 bytes)
+[2026-06-09 11:42:06] INFO: ✓ HTML file fetched successfully
+[2026-06-09 11:42:06] INFO: Step 3/3: Generating fixed code with Claude...
+[2026-06-09 11:42:06] INFO: Calling Claude API for SCRUM-7 using model claude-sonnet-4-6...
+[2026-06-09 11:42:07] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:07] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:07] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:07] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:10] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:10] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:12] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:12] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:13] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:13] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:16] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:16] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:17] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:17] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:19] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:19] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:22] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:22] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:22] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:22] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:25] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:25] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:27] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:27] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:28] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:28] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:29] INFO: ✓ Generated fixed HTML for SCRUM-7
+[2026-06-09 11:42:29] INFO: ✓ Fixed file saved: fixed_files\SCRUM-7_Fix login button - add loading indicator.html
+[2026-06-09 11:42:29] INFO: ✓ Bug SCRUM-7 processing completed successfully!
+[2026-06-09 11:42:31] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:31] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:31] INFO: 
+============================================================
+[2026-06-09 11:42:31] INFO: ✓ Workflow completed. Processed 1/1 bugs.
+[2026-06-09 11:42:31] INFO: ============================================================
+
+[2026-06-09 11:42:32] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:32] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:32] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:32] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:34] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:34] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:35] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:35] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:37] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:37] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:37] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:37] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:38] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:38] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:40] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:40] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:42] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:42] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:43] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:43] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:46] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:46] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:47] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:47] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:49] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:49] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:53] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:53] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:53] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:53] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:56] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:56] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:42:58] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:58] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:42:59] INFO: 127.0.0.1 - - [09/Jun/2026 11:42:59] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:02] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:02] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:03] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:03] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:05] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:05] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:08] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:08] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:08] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:08] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:11] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:11] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:13] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:13] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:14] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:14] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:17] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:17] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:18] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:18] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:20] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:20] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:23] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:23] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:23] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:23] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:26] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:26] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:28] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:28] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:29] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:29] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:32] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:32] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:33] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:33] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:35] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:35] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:38] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:38] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:38] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:38] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:39] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:39] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:39] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:39] "GET /api/config HTTP/1.1" 200 -
+[2026-06-09 11:43:39] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:39] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:42] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:42] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:44] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:44] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 11:43:45] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:45] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:48] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:48] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 11:43:49] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:49] "GET /api/status HTTP/1.1" 200 -

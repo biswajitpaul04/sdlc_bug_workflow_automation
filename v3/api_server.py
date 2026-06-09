@@ -6,7 +6,7 @@ Provides REST API endpoints to trigger and monitor workflow
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from bug_workflow import main as run_workflow
+from bug_workflow_claude import main as run_workflow
 import threading
 import json
 from datetime import datetime
@@ -69,19 +69,59 @@ def trigger_workflow():
 def get_logs():
     """Get workflow execution logs"""
     try:
-        if os.path.exists('logs/workflow.log'):
-            with open('logs/workflow.log', 'r') as f:
-                logs = f.readlines()
+        log_file = os.path.join(os.getcwd(), 'logs', 'workflow.log')
+        
+        if not os.path.exists(log_file):
+            return jsonify({
+                'logs': ["[INFO] Waiting for workflow to start... No logs yet."]
+            })
+        
+        # Read the file with proper encoding
+        with open(log_file, 'r', encoding='utf-8') as f:
+            logs = f.readlines()
+            
+            if not logs:
                 return jsonify({
-                    'logs': logs[-50:]  # Last 50 lines
+                    'logs': ["[INFO] Log file is empty. Waiting for workflow to run."]
                 })
+            
+            # Return last 100 lines
+            return jsonify({
+                'logs': logs[-100:]
+            })
+            
+    except Exception as e:
+        print(f"Error reading logs: {str(e)}")
+        return jsonify({
+            'logs': [f"[ERROR] Error reading logs: {str(e)}"]
+        })
+
+@app.route('/api/logs/clear', methods=['POST'])
+def clear_logs():
+    """Clear workflow logs"""
+    try:
+        log_file = os.path.join(os.getcwd(), 'logs', 'workflow.log')
+        if os.path.exists(log_file):
+            open(log_file, 'w').close()
+            return jsonify({
+                'status': 'success',
+                'message': 'Logs cleared'
+            })
     except Exception as e:
         return jsonify({
-            'logs': [f"Error reading logs: {str(e)}"]
+            'status': 'error',
+            'message': str(e)
         })
-    
+
+@app.route('/api/debug/paths', methods=['GET'])
+def debug_paths():
+    """Debug: Show current paths"""
     return jsonify({
-        'logs': ["No logs available yet"]
+        'working_directory': os.getcwd(),
+        'logs_directory': os.path.join(os.getcwd(), 'logs'),
+        'logs_file': os.path.join(os.getcwd(), 'logs', 'workflow.log'),
+        'logs_exist': os.path.exists(os.path.join(os.getcwd(), 'logs')),
+        'log_file_exists': os.path.exists(os.path.join(os.getcwd(), 'logs', 'workflow.log'))
     })
 
 @app.route('/api/health', methods=['GET'])

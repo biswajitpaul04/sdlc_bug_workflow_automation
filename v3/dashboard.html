@@ -122,45 +122,6 @@
             padding-bottom: 10px;
         }
 
-        .workflow-steps {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .step {
-            flex: 1;
-            min-width: 120px;
-            padding: 15px;
-            text-align: center;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            background: #fafafa;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .step.completed {
-            background: #e8f5e9;
-            border-color: #4caf50;
-            color: #2e7d32;
-        }
-
-        .step.active {
-            background: #e3f2fd;
-            border-color: #2196f3;
-            color: #1976d2;
-            animation: pulse-step 1.5s infinite;
-        }
-
-        @keyframes pulse-step {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
         .controls {
             display: flex;
             gap: 10px;
@@ -192,6 +153,12 @@
 
         button.primary:hover {
             background: #1976d2;
+        }
+
+        button.primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            border-color: #ccc;
         }
 
         button.success {
@@ -234,117 +201,6 @@
             color: #ff6b6b;
         }
 
-        .bug-list {
-            display: grid;
-            gap: 15px;
-        }
-
-        .bug-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 15px;
-            background: #fafafa;
-            transition: all 0.2s ease;
-        }
-
-        .bug-card:hover {
-            border-color: #2196f3;
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
-        }
-
-        .bug-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 12px;
-        }
-
-        .bug-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: #1a1a1a;
-        }
-
-        .bug-description {
-            font-size: 13px;
-            color: #666;
-            margin: 6px 0;
-        }
-
-        .bug-status {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .bug-status.in-progress {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .bug-status.completed {
-            background: #f3e5f5;
-            color: #6a1b9a;
-        }
-
-        .bug-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            font-size: 12px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .meta-item {
-            display: flex;
-            gap: 6px;
-        }
-
-        .meta-label {
-            color: #999;
-            font-weight: 500;
-        }
-
-        .meta-value {
-            color: #333;
-        }
-
-        .config-form {
-            display: grid;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: grid;
-            gap: 8px;
-        }
-
-        .form-label {
-            font-weight: 500;
-            font-size: 13px;
-            color: #333;
-        }
-
-        .form-input,
-        .form-select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: inherit;
-        }
-
-        .form-input:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: #2196f3;
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
-        }
-
         .alert {
             padding: 15px;
             border-radius: 6px;
@@ -358,44 +214,10 @@
             border-left: 4px solid #2196f3;
         }
 
-        .alert-warning {
-            background: #fff3e0;
-            color: #e65100;
-            border-left: 4px solid #ff9800;
-        }
-
-        .solution-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 15px;
-            background: #fafafa;
-            margin-bottom: 15px;
-        }
-
-        .solution-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .solution-title {
-            font-weight: 600;
-            color: #1a1a1a;
-            font-size: 14px;
-        }
-
-        .solution-time {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .solution-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 12px;
-            color: #666;
-            margin-top: 10px;
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #dc3545;
         }
 
         .spinner {
@@ -448,17 +270,17 @@
             display: block;
         }
 
+        .info-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #666;
+        }
+
         @media (max-width: 768px) {
             .metrics-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .workflow-steps {
-                flex-direction: column;
-            }
-
-            .step {
-                min-width: auto;
             }
 
             .controls {
@@ -474,207 +296,63 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Bug automation workflow</h1>
+            <h1>🐛 Bug Automation Workflow</h1>
             <p>Automated Jira bug checking and code generation dashboard</p>
-            <span id="statusBadge" class="status-badge status-idle">Idle - next run in 45 minutes</span>
+            <span id="statusBadge" class="status-badge status-idle">Loading...</span>
         </div>
 
         <div class="metrics-grid">
             <div class="metric-card">
-                <div class="metric-label">Bugs processed</div>
-                <div class="metric-value">24<span class="metric-unit">this week</span></div>
+                <div class="metric-label">Last Run</div>
+                <div class="metric-value" id="lastRun">-</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">Success rate</div>
-                <div class="metric-value">92<span class="metric-unit">%</span></div>
+                <div class="metric-label">Status</div>
+                <div class="metric-value" id="currentStatus">-</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">Avg generation time</div>
-                <div class="metric-value">34<span class="metric-unit">sec</span></div>
+                <div class="metric-label">Bugs Processed</div>
+                <div class="metric-value" id="bugsProcessed">0</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">Next run</div>
-                <div class="metric-value"><span id="nextRun">45</span><span class="metric-unit">min</span></div>
+                <div class="metric-label">API Connection</div>
+                <div class="metric-value" id="apiStatus">🔴</div>
             </div>
         </div>
 
         <div class="section">
-            <h2>Workflow status</h2>
-            <div class="workflow-steps">
-                <div class="step completed">✓ Check Jira</div>
-                <div class="step completed">✓ Find bugs</div>
-                <div class="step active">⟳ Mark in progress</div>
-                <div class="step">Generate code</div>
-                <div class="step">Save results</div>
+            <h2>⚙️ Workflow Control</h2>
+            <div id="connectionAlert" class="alert alert-error" style="display: none;">
+                ⚠️ Cannot connect to API server. Make sure api_server.py is running on http://localhost:5000
             </div>
             <div class="controls">
-                <button class="primary" onclick="runWorkflow()">▶ Run workflow now</button>
-                <button onclick="switchTab('logs')">📋 View logs</button>
-                <button onclick="switchTab('config')">⚙ Configure</button>
+                <button class="primary" id="runButton" onclick="runWorkflow()">▶ Run Workflow Now</button>
             </div>
-        </div>
-
-        <div class="section">
-            <h2>Active bugs</h2>
-            <div class="bug-list">
-                <div class="bug-card">
-                    <div class="bug-header">
-                        <div>
-                            <div class="bug-title">BUG-1247</div>
-                            <div class="bug-description">Login page crashes on Safari</div>
-                        </div>
-                        <span class="bug-status in-progress">In progress</span>
-                    </div>
-                    <div class="bug-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Priority:</span>
-                            <span class="meta-value">High</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Team:</span>
-                            <span class="meta-value">Frontend</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Status:</span>
-                            <span class="meta-value">Generating fix <span class="spinner"></span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bug-card">
-                    <div class="bug-header">
-                        <div>
-                            <div class="bug-title">BUG-1246</div>
-                            <div class="bug-description">API timeout on large dataset queries</div>
-                        </div>
-                        <span class="bug-status in-progress">In progress</span>
-                    </div>
-                    <div class="bug-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Priority:</span>
-                            <span class="meta-value">Critical</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Team:</span>
-                            <span class="meta-value">Backend</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Status:</span>
-                            <span class="meta-value">Code ready</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="info-box">
+                💡 Click "Run Workflow Now" to trigger the bug processing workflow immediately. The API server will process all "To Do" status bugs in your Jira project.
             </div>
         </div>
 
         <div class="section">
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('logs')">Execution logs</button>
-                <button class="tab" onclick="switchTab('config')">Configuration</button>
-                <button class="tab" onclick="switchTab('solutions')">Recent solutions</button>
+                <button class="tab active" onclick="switchTab('logs')">📋 Logs</button>
+                <button class="tab" onclick="switchTab('config')">⚙️ Configuration</button>
             </div>
 
             <div id="logs-tab" class="tab-content active">
                 <div class="log-viewer" id="logViewer">
-                    <div class="log-line info">[14:32:05] Starting bug workflow...</div>
-                    <div class="log-line info">[14:32:07] Querying Jira API for new bugs</div>
-                    <div class="log-line success">[14:32:09] Found 2 new bugs</div>
-                    <div class="log-line info">[14:32:10] Processing BUG-1247...</div>
-                    <div class="log-line success">[14:32:11] Marked BUG-1247 as In Progress</div>
-                    <div class="log-line info">[14:32:12] Generating code solution...</div>
-                    <div class="log-line success">[14:32:45] Code generated successfully (612 tokens)</div>
-                    <div class="log-line info">[14:32:47] Processing BUG-1246...</div>
-                    <div class="log-line success">[14:32:48] Marked BUG-1246 as In Progress</div>
-                    <div class="log-line info">[14:32:49] Generating code solution...</div>
-                    <div class="log-line success">[14:33:12] Code generated successfully (841 tokens)</div>
-                    <div class="log-line success">[14:33:15] Workflow completed. Processed 2 bugs.</div>
+                    <div class="log-line info">Waiting for logs...</div>
                 </div>
             </div>
 
             <div id="config-tab" class="tab-content">
                 <div class="alert alert-info">
-                    ℹ These values should be set as environment variables. Update your .env file and redeploy the workflow service.
+                    ℹ️ Configuration is managed via .env file. Update your environment variables and restart the API server.
                 </div>
-                <div class="config-form">
-                    <div class="form-group">
-                        <label class="form-label">Jira API URL</label>
-                        <input type="text" class="form-input" placeholder="https://your-domain.atlassian.net" value="https://your-domain.atlassian.net">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Jira Email</label>
-                        <input type="email" class="form-input" placeholder="your-email@example.com" value="your-email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Jira Project Key</label>
-                        <input type="text" class="form-input" placeholder="PROJ" value="PROJ">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Schedule (cron format)</label>
-                        <input type="text" class="form-input" placeholder="0 * * * *" value="0 * * * *">
-                        <small style="color: #999;">Every hour: 0 * * * * | Every 2 hours: 0 */2 * * * | Twice daily: 0 0,12 * * *</small>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Max bugs per run</label>
-                        <input type="number" class="form-input" placeholder="50" value="50">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Claude model</label>
-                        <select class="form-select">
-                            <option selected>claude-opus-4-1 (best, slower)</option>
-                            <option>claude-sonnet-4-20250514 (balanced)</option>
-                            <option>claude-haiku-3-5 (fast, cheaper)</option>
-                        </select>
-                    </div>
-                    <button class="success" onclick="saveConfig()">✓ Save configuration</button>
-                </div>
-            </div>
-
-            <div id="solutions-tab" class="tab-content">
-                <div class="solution-card">
-                    <div class="solution-header">
-                        <div>
-                            <div class="solution-title">BUG-1246: API timeout on large dataset queries</div>
-                            <div class="solution-meta">
-                                <span>Generated today, 2:33 PM</span>
-                                <span>841 tokens</span>
-                                <span style="color: #4caf50;">Ready for review</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                        <strong>Fix:</strong> Add pagination support to handle large result sets. Implemented with limit/offset parameters and cursor-based pagination for optimal performance.
-                    </div>
-                </div>
-
-                <div class="solution-card">
-                    <div class="solution-header">
-                        <div>
-                            <div class="solution-title">BUG-1245: Memory leak in background worker</div>
-                            <div class="solution-meta">
-                                <span>Generated yesterday, 11:15 AM</span>
-                                <span>612 tokens</span>
-                                <span style="color: #4caf50;">Ready for review</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                        <strong>Fix:</strong> Implement proper cleanup of event listeners and timers. Added dispose method to prevent accumulation of resources over time.
-                    </div>
-                </div>
-
-                <div class="solution-card">
-                    <div class="solution-header">
-                        <div>
-                            <div class="solution-title">BUG-1244: Race condition in session manager</div>
-                            <div class="solution-meta">
-                                <span>Generated 3 days ago</span>
-                                <span>728 tokens</span>
-                                <span style="color: #6a1b9a;">Merged</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                        <strong>Fix:</strong> Use mutex locks to ensure thread-safe access to session data. Added proper synchronization to prevent concurrent modifications.
+                <div style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 15px;">Current Configuration:</h3>
+                    <div id="configInfo" class="info-box">
+                        Loading configuration...
                     </div>
                 </div>
             </div>
@@ -682,6 +360,19 @@
     </div>
 
     <script>
+        const API_URL = 'http://localhost:5000';
+        let isRunning = false;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshStatus();
+            refreshLogs();
+            refreshConfig();
+            // Auto-refresh every 5 seconds
+            setInterval(refreshStatus, 5000);
+            setInterval(refreshLogs, 3000);
+        });
+
         function switchTab(tabName) {
             const tabs = document.querySelectorAll('.tab');
             const contents = document.querySelectorAll('.tab-content');
@@ -693,58 +384,167 @@
             document.getElementById(tabName + '-tab').classList.add('active');
         }
 
-        function runWorkflow() {
-            const statusBadge = document.getElementById('statusBadge');
-            const steps = document.querySelectorAll('.step');
-
-            statusBadge.textContent = 'Running workflow...';
-            statusBadge.className = 'status-badge status-running';
-
-            let currentStep = 0;
-            const stepNames = ['Check Jira', 'Find bugs', 'Mark in progress', 'Generate code', 'Save results'];
-
-            const interval = setInterval(() => {
-                if (currentStep > 0) {
-                    steps[currentStep - 1].classList.remove('active');
-                    steps[currentStep - 1].classList.add('completed');
-                    steps[currentStep - 1].textContent = '✓ ' + stepNames[currentStep - 1];
+        async function refreshStatus() {
+            try {
+                const response = await fetch(`${API_URL}/api/status`);
+                
+                if (!response.ok) {
+                    throw new Error('API request failed');
                 }
 
-                if (currentStep < stepNames.length) {
-                    steps[currentStep].classList.add('active');
-                    currentStep++;
+                const data = await response.json();
+                
+                // Update UI
+                const statusBadge = document.getElementById('statusBadge');
+                const statusText = data.status || 'idle';
+                
+                if (statusText === 'running') {
+                    statusBadge.textContent = '🟢 Workflow Running...';
+                    statusBadge.className = 'status-badge status-running';
+                    isRunning = true;
+                    document.getElementById('runButton').disabled = true;
+                } else if (statusText === 'error') {
+                    statusBadge.textContent = '🔴 Error: ' + (data.error || 'Unknown error');
+                    statusBadge.className = 'status-badge status-error';
+                    isRunning = false;
+                    document.getElementById('runButton').disabled = false;
                 } else {
-                    clearInterval(interval);
-                    statusBadge.textContent = 'Workflow completed successfully';
+                    statusBadge.textContent = '🟡 Idle - Ready to run';
                     statusBadge.className = 'status-badge status-idle';
-                    addLog('success', 'Workflow execution completed successfully');
+                    isRunning = false;
+                    document.getElementById('runButton').disabled = false;
                 }
-            }, 1200);
-        }
 
-        function saveConfig() {
-            addLog('success', 'Configuration saved. Please redeploy the workflow service.');
-            alert('Configuration saved! Remember to update your .env file and redeploy.');
-        }
+                document.getElementById('currentStatus').textContent = statusText.toUpperCase();
+                document.getElementById('bugsProcessed').textContent = data.bugs_processed || 0;
+                document.getElementById('lastRun').textContent = data.last_run ? new Date(data.last_run).toLocaleString() : 'Never';
+                document.getElementById('apiStatus').textContent = '🟢';
+                document.getElementById('connectionAlert').style.display = 'none';
 
-        function addLog(type, message) {
-            const logViewer = document.getElementById('logViewer');
-            const timestamp = new Date().toLocaleTimeString();
-            const logLine = document.createElement('div');
-            logLine.className = 'log-line ' + type;
-            logLine.textContent = `[${timestamp}] ${message}`;
-            logViewer.appendChild(logLine);
-            logViewer.scrollTop = logViewer.scrollHeight;
-        }
-
-        setInterval(() => {
-            const nextRun = document.getElementById('nextRun');
-            let minutes = parseInt(nextRun.textContent);
-            if (minutes > 0) {
-                minutes--;
-                nextRun.textContent = minutes;
+            } catch (error) {
+                console.error('Status fetch error:', error);
+                document.getElementById('apiStatus').textContent = '🔴';
+                document.getElementById('connectionAlert').style.display = 'block';
+                document.getElementById('statusBadge').textContent = '🔴 API Disconnected';
+                document.getElementById('statusBadge').className = 'status-badge status-error';
             }
-        }, 60000);
+        }
+
+        async function refreshLogs() {
+            try {
+                const response = await fetch(`${API_URL}/api/logs`);
+                
+                if (!response.ok) {
+                    throw new Error('Logs fetch failed');
+                }
+
+                const data = await response.json();
+                const logViewer = document.getElementById('logViewer');
+                
+                // Only update if we have new logs
+                if (data.logs && data.logs.length > 0) {
+                    logViewer.innerHTML = '';
+                    data.logs.forEach(log => {
+                        const logLine = document.createElement('div');
+                        logLine.className = 'log-line';
+                        
+                        // Color code based on content
+                        if (log.includes('ERROR') || log.includes('error')) {
+                            logLine.className += ' error';
+                        } else if (log.includes('success') || log.includes('✓') || log.includes('✅')) {
+                            logLine.className += ' success';
+                        } else if (log.includes('INFO') || log.includes('info')) {
+                            logLine.className += ' info';
+                        }
+                        
+                        logLine.textContent = log.trim();
+                        logViewer.appendChild(logLine);
+                    });
+                    logViewer.scrollTop = logViewer.scrollHeight;
+                }
+
+            } catch (error) {
+                console.error('Logs fetch error:', error);
+            }
+        }
+
+        async function refreshConfig() {
+            try {
+                const response = await fetch(`${API_URL}/api/config`);
+                
+                if (!response.ok) {
+                    throw new Error('Config fetch failed');
+                }
+
+                const data = await response.json();
+                const configInfo = document.getElementById('configInfo');
+                
+                configInfo.innerHTML = `
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Jira URL:</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><code>${data.jira_url || 'Not set'}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Project:</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><code>${data.jira_project || 'Not set'}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Claude Model:</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><code>${data.claude_model || 'Not set'}</code></td>
+                        </tr>
+                    </table>
+                `;
+
+            } catch (error) {
+                console.error('Config fetch error:', error);
+            }
+        }
+
+        async function runWorkflow() {
+            if (isRunning) {
+                alert('⚠️ Workflow is already running!');
+                return;
+            }
+
+            try {
+                document.getElementById('runButton').disabled = true;
+                
+                const response = await fetch(`${API_URL}/api/trigger`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                if (!response.ok) {
+                    throw new Error('Trigger request failed');
+                }
+
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    alert('✅ Workflow triggered successfully!');
+                    isRunning = true;
+                    refreshStatus();
+                } else {
+                    alert('❌ ' + (data.message || 'Failed to trigger workflow'));
+                    document.getElementById('runButton').disabled = false;
+                }
+
+            } catch (error) {
+                console.error('Trigger error:', error);
+                alert('❌ Error: Cannot connect to API server. Make sure api_server.py is running.');
+                document.getElementById('runButton').disabled = false;
+            }
+        }
+
+        function refreshAll() {
+            refreshStatus();
+            refreshLogs();
+            refreshConfig();
+        }
     </script>
 </body>
 </html>

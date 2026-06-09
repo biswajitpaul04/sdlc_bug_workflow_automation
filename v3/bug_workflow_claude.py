@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Automated Bug Checking and Code Generation Workflow
-Reads HTML file from GitHub, analyzes bugs, applies fixes, and saves updated HTML
+With proper logging to file for dashboard
 """
 
 import os
@@ -16,11 +16,19 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Configure logging
+# Create logs directory
+os.makedirs('logs', exist_ok=True)
+
+# Configure logging - BOTH to file AND console
+log_file = os.path.join('logs', 'workflow.log')
 logging.basicConfig(
     level=logging.INFO,
     format='[%(asctime)s] %(levelname)s: %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    datefmt='%Y-%m-%d %H:%M:%S',
+    handlers=[
+        logging.FileHandler(log_file, encoding='utf-8'),  # Save to file
+        logging.StreamHandler()  # Print to console
+    ]
 )
 logger = logging.getLogger(__name__)
 
@@ -36,13 +44,10 @@ class JiraClient:
         self.session.auth = (email, api_token)
         self.session.headers.update({'Content-Type': 'application/json'})
     
-    def get_new_bugs(self, project_key: str, hours: int = 1) -> List[Dict]:
-        """
-        Fetch bugs/tasks with "To Do" status from project
-        """
+    def get_new_bugs(self, project_key: str) -> List[Dict]:
+        """Fetch bugs with "To Do" status from project"""
         try:
             jql = f'project = {project_key} AND status = "To Do" ORDER BY created DESC'
-            
             logger.info(f"JQL Query: {jql}")
             
             response = self.session.get(
@@ -76,9 +81,6 @@ class JiraClient:
                     priority_name = priority.get('name', 'Medium') if priority else 'Medium'
                     assignee = fields.get('assignee', {})
                     assignee_name = assignee.get('displayName', 'Unassigned') if assignee else 'Unassigned'
-                    labels = fields.get('labels', [])
-                    issuetype = fields.get('issuetype', {})
-                    type_name = issuetype.get('name', 'Unknown') if issuetype else 'Unknown'
                     
                     bug = {
                         'key': key,
@@ -86,11 +88,9 @@ class JiraClient:
                         'description': description,
                         'priority': priority_name,
                         'assignee': assignee_name,
-                        'labels': labels if labels else [],
-                        'type': type_name,
                     }
                     bugs.append(bug)
-                    logger.info(f"  ✓ Successfully parsed: {key}")
+                    logger.info(f"✓ Successfully parsed: {key}")
                     
                 except Exception as e:
                     logger.error(f"Error parsing issue {idx}: {e}")
@@ -104,16 +104,15 @@ class JiraClient:
             raise
     
     def mark_in_progress(self, issue_key: str, transition_id: str = '11') -> bool:
-        """
-        Mark a bug as In Progress
-        """
+        """Mark a bug as In Progress"""
         try:
+            logger.info(f"Marking {issue_key} as In Progress...")
             response = self.session.post(
                 f'{self.base_url}/rest/api/3/issue/{issue_key}/transitions',
                 json={'transition': {'id': transition_id}}
             )
             response.raise_for_status()
-            logger.info(f"Marked {issue_key} as In Progress")
+            logger.info(f"✓ Marked {issue_key} as In Progress")
             return True
             
         except requests.RequestException as e:
@@ -122,7 +121,7 @@ class JiraClient:
     
     @staticmethod
     def _extract_description(description_obj: Optional[Dict]) -> str:
-        """Extract plain text and URLs from Jira's rich text description"""
+        """Extract plain text from Jira rich text description"""
         if not description_obj:
             return ""
         
@@ -130,7 +129,6 @@ class JiraClient:
             full_text = ""
             content = description_obj.get('content', []) if isinstance(description_obj, dict) else []
             
-            # Recursively extract text and URLs from all content blocks
             def extract_from_content(items):
                 text = ""
                 if not items:
@@ -138,14 +136,11 @@ class JiraClient:
                     
                 for item in items:
                     if isinstance(item, dict):
-                        # Handle text blocks
                         if item.get('type') == 'text' and 'text' in item:
                             text += item['text']
-                        # Handle links
                         elif item.get('type') == 'inlineCard' and 'attrs' in item:
                             url = item['attrs'].get('url', '')
                             text += url
-                        # Recursively handle nested content
                         if 'content' in item:
                             text += extract_from_content(item['content'])
                 
@@ -154,7 +149,7 @@ class JiraClient:
             full_text = extract_from_content(content)
             return full_text.strip() if full_text else ""
             
-        except (IndexError, KeyError, TypeError) as e:
+        except Exception as e:
             logger.debug(f"Error extracting description: {e}")
             return ""
 
@@ -164,20 +159,16 @@ class GitHubClient:
     
     @staticmethod
     def extract_github_url(description: str) -> Optional[str]:
-        """
-        Extract GitHub URL from bug description
-        """
+        """Extract GitHub URL from bug description"""
         pattern = r'(https?://(?:raw\.)?(?:github\.com|githubusercontent\.com)/[^\s\)]+\.html(?:\?[^\s\)]*)?)'
         match = re.search(pattern, description)
         
         if match:
             url = match.group(1)
             
-            # Convert regular GitHub URL to raw content URL
             if 'github.com' in url and 'raw.' not in url:
                 url = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/')
             
-            # Fix /refs/heads/branch/ format to /branch/
             url = url.replace('/refs/heads/', '/')
             
             logger.info(f"Found GitHub URL: {url}")
@@ -187,13 +178,10 @@ class GitHubClient:
     
     @staticmethod
     def fetch_html_file(url: str) -> Optional[str]:
-        """
-        Fetch HTML file content from GitHub raw URL
-        """
+        """Fetch HTML file from GitHub with token authentication"""
         try:
             logger.info(f"Fetching HTML from GitHub: {url}")
             
-            # Extract token from URL if present
             headers = {}
             if '?token=' in url:
                 token = url.split('?token=')[1]
@@ -202,7 +190,7 @@ class GitHubClient:
             
             response = requests.get(url, headers=headers, timeout=10)
             response.raise_for_status()
-            logger.info(f"✅ Successfully fetched HTML file ({len(response.text)} bytes)")
+            logger.info(f"✓ Successfully fetched HTML file ({len(response.text)} bytes)")
             return response.text
         except requests.RequestException as e:
             logger.error(f"Failed to fetch HTML from GitHub: {e}")
@@ -218,10 +206,7 @@ class ClaudeCodeGenerator:
         self.base_url = 'https://api.anthropic.com/v1'
     
     def generate_fixed_html(self, bug: Dict, html_content: Optional[str] = None) -> Optional[str]:
-        """
-        Generate fixed HTML code for a bug
-        Returns the complete fixed HTML file
-        """
+        """Generate fixed HTML code for a bug"""
         try:
             prompt = self._build_prompt(bug, html_content)
             
@@ -252,12 +237,10 @@ class ClaudeCodeGenerator:
                 return None
             
             response_text = response.json()['content'][0]['text']
-            
-            # Extract HTML code from response
             fixed_html = self._extract_html_from_response(response_text)
             
             if fixed_html:
-                logger.info(f"Generated fixed HTML for {bug['key']}")
+                logger.info(f"✓ Generated fixed HTML for {bug['key']}")
                 return fixed_html
             else:
                 logger.error(f"Could not extract HTML from Claude response")
@@ -269,16 +252,11 @@ class ClaudeCodeGenerator:
     
     @staticmethod
     def _extract_html_from_response(response_text: str) -> Optional[str]:
-        """
-        Extract HTML code from Claude's response
-        Looks for HTML code between ```html``` markers or complete HTML document
-        """
-        # Try to find HTML in code blocks
+        """Extract HTML from Claude response"""
         html_match = re.search(r'```html\n(.*?)\n```', response_text, re.DOTALL)
         if html_match:
             return html_match.group(1)
         
-        # If no code block, look for complete HTML document
         if '<!DOCTYPE html' in response_text:
             html_start = response_text.find('<!DOCTYPE html')
             html_end = response_text.rfind('</html>')
@@ -289,7 +267,7 @@ class ClaudeCodeGenerator:
     
     @staticmethod
     def _build_prompt(bug: Dict, html_content: Optional[str] = None) -> str:
-        """Build the prompt for Claude - request complete fixed HTML"""
+        """Build prompt for Claude"""
         
         if html_content:
             return f"""You are a senior web developer. A bug has been reported for an HTML file:
@@ -298,17 +276,16 @@ class ClaudeCodeGenerator:
 **Title:** {bug['summary']}
 **Description:** {bug['description']}
 **Priority:** {bug['priority']}
-**Assigned to:** {bug['assignee']}
 
 **Current HTML File:**
 ```html
 {html_content}
 ```
 
-IMPORTANT: You must provide the COMPLETE fixed HTML file (the entire code). Do NOT provide partial fixes or explanations.
+IMPORTANT: You must provide the COMPLETE fixed HTML file.
 
 Analyze the bug and provide the COMPLETE, FIXED HTML code that addresses the issue. 
-Return only the full HTML code wrapped in ```html``` markers. No explanations, no comments about what changed - just the complete fixed code.
+Return only the full HTML code wrapped in ```html``` markers. No explanations - just the complete fixed code.
 
 The fixed HTML should:
 1. Solve the reported bug
@@ -348,89 +325,88 @@ class BugWorkflowOrchestrator:
         os.makedirs(self.fixed_dir, exist_ok=True)
     
     def run(self) -> Dict:
-        """
-        Run the complete workflow
-        """
+        """Run the complete workflow"""
+        logger.info("=" * 60)
         logger.info("Starting bug workflow...")
+        logger.info("=" * 60)
         
         try:
-            bugs = self.jira.get_new_bugs(self.project_key, hours=1)
+            bugs = self.jira.get_new_bugs(self.project_key)
             
             if not bugs:
                 logger.info("No bugs found with 'To Do' status. Exiting.")
                 return {'status': 'completed', 'bugs_processed': 0}
             
             processed_count = 0
-            for bug in bugs:
+            for idx, bug in enumerate(bugs, 1):
+                logger.info(f"\n{'='*60}")
+                logger.info(f"Processing bug {idx}/{len(bugs)}: {bug['key']}")
+                logger.info(f"{'='*60}")
+                
                 if self._process_bug(bug):
                     processed_count += 1
                 
                 import time
                 time.sleep(2)
             
-            logger.info(f"Workflow completed. Processed {processed_count}/{len(bugs)} bugs.")
+            logger.info(f"\n{'='*60}")
+            logger.info(f"✓ Workflow completed. Processed {processed_count}/{len(bugs)} bugs.")
+            logger.info(f"{'='*60}\n")
             return {'status': 'completed', 'bugs_processed': processed_count}
             
         except Exception as e:
-            logger.error(f"Workflow failed: {e}")
+            logger.error(f"❌ Workflow failed: {e}")
             import traceback
             logger.error(traceback.format_exc())
             return {'status': 'failed', 'error': str(e)}
     
     def _process_bug(self, bug: Dict) -> bool:
-        """
-        Process a single bug
-        """
-        logger.info(f"Processing {bug['type']}: {bug['key']}")
-        logger.info(f"Bug Summary: {bug['summary']}")
-        logger.info(f"Bug Description: {bug['description']}")
-        logger.info(f"Priority: {bug['priority']}")
-        logger.info(f"Assigned to: {bug['assignee']}")
+        """Process a single bug"""
+        logger.info(f"Bug: {bug['key']} - {bug['summary']}")
+        logger.info(f"Priority: {bug['priority']} | Assigned to: {bug['assignee']}")
+        logger.info(f"Description: {bug['description'][:100]}...")
         
         if not self.jira.mark_in_progress(bug['key']):
             return False
         
-        # Try to fetch HTML file from GitHub
+        logger.info("Step 1/3: Extracting GitHub URL...")
         html_content = None
         github_url = GitHubClient.extract_github_url(bug['description'])
         
         if github_url:
-            logger.info(f"✅ GitHub URL found: {github_url}")
+            logger.info(f"✓ GitHub URL found: {github_url}")
+            logger.info("Step 2/3: Fetching HTML file from GitHub...")
             html_content = GitHubClient.fetch_html_file(github_url)
+            if html_content:
+                logger.info(f"✓ HTML file fetched successfully")
+            else:
+                logger.warning(f"⚠ Could not fetch HTML file, proceeding without context")
         else:
-            logger.warning(f"❌ No GitHub URL found in bug description for {bug['key']}")
+            logger.warning(f"⚠ No GitHub URL found in description")
         
-        # Generate fixed HTML
+        logger.info("Step 3/3: Generating fixed code with Claude...")
         fixed_html = self.generator.generate_fixed_html(bug, html_content)
         if not fixed_html:
+            logger.error(f"✗ Failed to generate code for {bug['key']}")
             return False
         
-        self._save_fixed_file(bug['key'], fixed_html, github_url)
+        self._save_fixed_file(bug['key'], fixed_html, bug['summary'])
+        logger.info(f"✓ Bug {bug['key']} processing completed successfully!")
         return True
     
-    def _save_fixed_file(self, bug_key: str, fixed_html: str, github_url: Optional[str] = None) -> None:
-        """
-        Save fixed HTML file
-        """
+    def _save_fixed_file(self, bug_key: str, fixed_html: str, bug_summary: str) -> None:
+        """Save fixed HTML file"""
         try:
-            timestamp = datetime.now().isoformat().replace(':', '-').replace('.', '-')
-            
-            # Extract filename from GitHub URL
-            filename = "index.html"
-            if github_url and '/' in github_url:
-                filename = github_url.split('/')[-1]
-            
-            # Create filename with bug key and timestamp
-            base_name = filename.replace('.html', '')
-            filename = os.path.join(self.fixed_dir, f'{base_name}_{bug_key}_{timestamp}.html')
+            safe_summary = bug_summary.replace('/', '_').replace('\\', '_').replace(':', '_')
+            filename = os.path.join(self.fixed_dir, f'{bug_key}_{safe_summary}.html')
             
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(fixed_html)
             
-            logger.info(f"✅ Fixed HTML file saved: {filename}")
+            logger.info(f"✓ Fixed file saved: {filename}")
             
         except IOError as e:
-            logger.error(f"Failed to save fixed file: {e}")
+            logger.error(f"✗ Failed to save fixed file: {e}")
 
 
 def main():
