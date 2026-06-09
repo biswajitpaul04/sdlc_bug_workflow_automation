@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Automated Bug Checking and Code Generation Workflow
-Reads HTML file from GitHub, analyzes bugs, generates specific code fixes
+Reads HTML file from GitHub, analyzes bugs, applies fixes, and saves updated HTML
 """
 
 import os
@@ -122,20 +122,41 @@ class JiraClient:
     
     @staticmethod
     def _extract_description(description_obj: Optional[Dict]) -> str:
-        """Extract plain text from Jira's rich text description"""
+        """Extract plain text and URLs from Jira's rich text description"""
         if not description_obj:
             return ""
         
         try:
+            full_text = ""
             content = description_obj.get('content', []) if isinstance(description_obj, dict) else []
-            if content and isinstance(content[0], dict):
-                text_content = content[0].get('content', [])
-                if text_content and isinstance(text_content[0], dict):
-                    return text_content[0].get('text', '')
-        except (IndexError, KeyError, TypeError):
-            pass
-        
-        return ""
+            
+            # Recursively extract text and URLs from all content blocks
+            def extract_from_content(items):
+                text = ""
+                if not items:
+                    return text
+                    
+                for item in items:
+                    if isinstance(item, dict):
+                        # Handle text blocks
+                        if item.get('type') == 'text' and 'text' in item:
+                            text += item['text']
+                        # Handle links
+                        elif item.get('type') == 'inlineCard' and 'attrs' in item:
+                            url = item['attrs'].get('url', '')
+                            text += url
+                        # Recursively handle nested content
+                        if 'content' in item:
+                            text += extract_from_content(item['content'])
+                
+                return text
+            
+            full_text = extract_from_content(content)
+            return full_text.strip() if full_text else ""
+            
+        except (IndexError, KeyError, TypeError) as e:
+            logger.debug(f"Error extracting description: {e}")
+            return ""
 
 
 class GitHubClient:
@@ -145,17 +166,20 @@ class GitHubClient:
     def extract_github_url(description: str) -> Optional[str]:
         """
         Extract GitHub URL from bug description
-        Looks for patterns like: https://github.com/...html or github.com URLs
         """
-        # Pattern: https://github.com/user/repo/blob/branch/path/to/file.html
-        pattern = r'(https?://(?:raw\.)?github\.com/[^\s]+\.html)'
+        pattern = r'(https?://(?:raw\.)?(?:github\.com|githubusercontent\.com)/[^\s\)]+\.html(?:\?[^\s\)]*)?)'
         match = re.search(pattern, description)
         
         if match:
             url = match.group(1)
+            
             # Convert regular GitHub URL to raw content URL
-            if 'raw.github' not in url:
+            if 'github.com' in url and 'raw.' not in url:
                 url = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/')
+            
+            # Fix /refs/heads/branch/ format to /branch/
+            url = url.replace('/refs/heads/', '/')
+            
             logger.info(f"Found GitHub URL: {url}")
             return url
         
@@ -168,9 +192,17 @@ class GitHubClient:
         """
         try:
             logger.info(f"Fetching HTML from GitHub: {url}")
-            response = requests.get(url, timeout=10)
+            
+            # Extract token from URL if present
+            headers = {}
+            if '?token=' in url:
+                token = url.split('?token=')[1]
+                headers['Authorization'] = f'token {token}'
+                url = url.split('?token=')[0]
+            
+            response = requests.get(url, headers=headers, timeout=10)
             response.raise_for_status()
-            logger.info(f"Successfully fetched HTML file ({len(response.text)} bytes)")
+            logger.info(f"✅ Successfully fetched HTML file ({len(response.text)} bytes)")
             return response.text
         except requests.RequestException as e:
             logger.error(f"Failed to fetch HTML from GitHub: {e}")
@@ -185,10 +217,10 @@ class ClaudeCodeGenerator:
         self.model = model
         self.base_url = 'https://api.anthropic.com/v1'
     
-    def generate_solution(self, bug: Dict, html_content: Optional[str] = None) -> Optional[str]:
+    def generate_fixed_html(self, bug: Dict, html_content: Optional[str] = None) -> Optional[str]:
         """
-        Generate a code solution for a bug
-        If html_content is provided, uses it as context
+        Generate fixed HTML code for a bug
+        Returns the complete fixed HTML file
         """
         try:
             prompt = self._build_prompt(bug, html_content)
@@ -204,7 +236,7 @@ class ClaudeCodeGenerator:
                 },
                 json={
                     'model': self.model,
-                    'max_tokens': 2048,
+                    'max_tokens': 4096,
                     'messages': [
                         {
                             'role': 'user',
@@ -219,17 +251,45 @@ class ClaudeCodeGenerator:
                 logger.error(f"Response: {response.text}")
                 return None
             
-            solution = response.json()['content'][0]['text']
-            logger.info(f"Generated code solution for {bug['key']}")
-            return solution
+            response_text = response.json()['content'][0]['text']
+            
+            # Extract HTML code from response
+            fixed_html = self._extract_html_from_response(response_text)
+            
+            if fixed_html:
+                logger.info(f"Generated fixed HTML for {bug['key']}")
+                return fixed_html
+            else:
+                logger.error(f"Could not extract HTML from Claude response")
+                return None
             
         except requests.RequestException as e:
             logger.error(f"Failed to generate code for {bug['key']}: {e}")
             return None
     
     @staticmethod
+    def _extract_html_from_response(response_text: str) -> Optional[str]:
+        """
+        Extract HTML code from Claude's response
+        Looks for HTML code between ```html``` markers or complete HTML document
+        """
+        # Try to find HTML in code blocks
+        html_match = re.search(r'```html\n(.*?)\n```', response_text, re.DOTALL)
+        if html_match:
+            return html_match.group(1)
+        
+        # If no code block, look for complete HTML document
+        if '<!DOCTYPE html' in response_text:
+            html_start = response_text.find('<!DOCTYPE html')
+            html_end = response_text.rfind('</html>')
+            if html_end != -1:
+                return response_text[html_start:html_end+7]
+        
+        return None
+    
+    @staticmethod
     def _build_prompt(bug: Dict, html_content: Optional[str] = None) -> str:
-        """Build the prompt for Claude with HTML context if available"""
+        """Build the prompt for Claude - request complete fixed HTML"""
         
         if html_content:
             return f"""You are a senior web developer. A bug has been reported for an HTML file:
@@ -240,44 +300,33 @@ class ClaudeCodeGenerator:
 **Priority:** {bug['priority']}
 **Assigned to:** {bug['assignee']}
 
-**HTML File to Fix:**
+**Current HTML File:**
 ```html
 {html_content}
 ```
 
-Please analyze the HTML file and the bug description, then provide:
+IMPORTANT: You must provide the COMPLETE fixed HTML file (the entire code). Do NOT provide partial fixes or explanations.
 
-1. **Root Cause Analysis**: What in the HTML is causing this bug?
-2. **Code Fix**: Provide the exact HTML/CSS/JavaScript changes needed with line numbers
-3. **Changed Code**: Show the exact code blocks that need to be changed (in full, not snippets)
-4. **Test Instructions**: How to verify the fix works
-5. **Prevention**: How can we prevent similar bugs in the future?
+Analyze the bug and provide the COMPLETE, FIXED HTML code that addresses the issue. 
+Return only the full HTML code wrapped in ```html``` markers. No explanations, no comments about what changed - just the complete fixed code.
 
-Format your response using markdown with proper code blocks for code examples."""
+The fixed HTML should:
+1. Solve the reported bug
+2. Maintain all existing functionality
+3. Keep the same structure and styling
+4. Be production-ready
+
+Return ONLY the complete HTML code wrapped in ```html``` tags."""
         
         else:
-            # Fallback if no HTML file found
             return f"""You are a senior software engineer. A bug has been reported:
 
 **Bug ID:** {bug['key']}
 **Title:** {bug['summary']}
 **Description:** {bug['description']}
 **Priority:** {bug['priority']}
-**Type:** {bug.get('type', 'Unknown')}
-**Assigned to:** {bug['assignee']}
 
-Note: No HTML file was found in the bug description. 
-Please analyze the bug description and provide what you can.
-
-Please provide a comprehensive solution including:
-
-1. **Root Cause Analysis**: What's likely causing this bug?
-2. **Code Fix**: Provide the exact code changes needed
-3. **Test Cases**: Write test cases to verify the fix
-4. **Deployment Notes**: Any special considerations for deploying this fix
-5. **Prevention**: How can we prevent similar bugs in the future?
-
-Format your response using markdown with proper code blocks for code examples."""
+Please analyze the bug and provide suggestions for fixing it."""
 
 
 class BugWorkflowOrchestrator:
@@ -294,9 +343,9 @@ class BugWorkflowOrchestrator:
             model=os.getenv('CLAUDE_MODEL', 'claude-sonnet-4-6')
         )
         self.project_key = os.getenv('JIRA_PROJECT_KEY')
-        self.solutions_dir = 'solutions'
+        self.fixed_dir = 'fixed_files'
         
-        os.makedirs(self.solutions_dir, exist_ok=True)
+        os.makedirs(self.fixed_dir, exist_ok=True)
     
     def run(self) -> Dict:
         """
@@ -333,6 +382,10 @@ class BugWorkflowOrchestrator:
         Process a single bug
         """
         logger.info(f"Processing {bug['type']}: {bug['key']}")
+        logger.info(f"Bug Summary: {bug['summary']}")
+        logger.info(f"Bug Description: {bug['description']}")
+        logger.info(f"Priority: {bug['priority']}")
+        logger.info(f"Assigned to: {bug['assignee']}")
         
         if not self.jira.mark_in_progress(bug['key']):
             return False
@@ -340,54 +393,44 @@ class BugWorkflowOrchestrator:
         # Try to fetch HTML file from GitHub
         html_content = None
         github_url = GitHubClient.extract_github_url(bug['description'])
+        
         if github_url:
+            logger.info(f"✅ GitHub URL found: {github_url}")
             html_content = GitHubClient.fetch_html_file(github_url)
+        else:
+            logger.warning(f"❌ No GitHub URL found in bug description for {bug['key']}")
         
-        if not github_url:
-            logger.warning(f"No GitHub URL found in bug description for {bug['key']}")
-        
-        # Generate solution (with or without HTML context)
-        solution = self.generator.generate_solution(bug, html_content)
-        if not solution:
+        # Generate fixed HTML
+        fixed_html = self.generator.generate_fixed_html(bug, html_content)
+        if not fixed_html:
             return False
         
-        self._save_solution(bug['key'], solution, bug, github_url)
+        self._save_fixed_file(bug['key'], fixed_html, github_url)
         return True
     
-    def _save_solution(self, bug_key: str, solution: str, bug: Dict, github_url: Optional[str] = None) -> None:
+    def _save_fixed_file(self, bug_key: str, fixed_html: str, github_url: Optional[str] = None) -> None:
         """
-        Save generated solution to file
+        Save fixed HTML file
         """
         try:
             timestamp = datetime.now().isoformat().replace(':', '-').replace('.', '-')
-            filename = os.path.join(self.solutions_dir, f'{bug_key}_{timestamp}.md')
             
-            github_section = f"\n**GitHub File:** {github_url}\n" if github_url else ""
+            # Extract filename from GitHub URL
+            filename = "index.html"
+            if github_url and '/' in github_url:
+                filename = github_url.split('/')[-1]
             
-            content = f"""# Bug Fix: {bug_key}
-
-**Generated:** {datetime.now().isoformat()}
-**Title:** {bug['summary']}
-**Type:** {bug.get('type', 'Unknown')}
-**Priority:** {bug['priority']}
-**Assigned to:** {bug['assignee']}{github_section}
-
-## Solution
-
-{solution}
-
----
-
-*Generated by Automated Bug Workflow*
-"""
+            # Create filename with bug key and timestamp
+            base_name = filename.replace('.html', '')
+            filename = os.path.join(self.fixed_dir, f'{base_name}_{bug_key}_{timestamp}.html')
             
             with open(filename, 'w', encoding='utf-8') as f:
-                f.write(content)
+                f.write(fixed_html)
             
-            logger.info(f"Solution saved to {filename}")
+            logger.info(f"✅ Fixed HTML file saved: {filename}")
             
         except IOError as e:
-            logger.error(f"Failed to save solution: {e}")
+            logger.error(f"Failed to save fixed file: {e}")
 
 
 def main():
