@@ -170,32 +170,6 @@
         .error-message.show {
             display: block;
         }
-
-        .loading {
-            display: none;
-            text-align: center;
-            color: #667eea;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 8px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading.show {
-            display: block;
-        }
     </style>
 </head>
 <body>
@@ -242,10 +216,6 @@
             <button type="submit" class="login-button" id="loginButton">
                 Sign In
             </button>
-
-            <div class="loading" id="loading">
-                <span class="spinner"></span> Signing in...
-            </div>
         </form>
 
         <div class="signup-link">
@@ -256,7 +226,6 @@
     <script>
         const loginForm = document.getElementById('loginForm');
         const loginButton = document.getElementById('loginButton');
-        const loading = document.getElementById('loading');
         const errorMessage = document.getElementById('errorMessage');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -284,9 +253,6 @@
                 return;
             }
 
-            // Show loading state
-            loginButton.disabled = true;
-            loading.classList.add('show');
             clearError();
 
             try {
@@ -299,10 +265,6 @@
                 // window.location.href = '/dashboard';
             } catch (error) {
                 showError(error.message || 'Login failed. Please try again.');
-            } finally {
-                // Hide loading state
-                loginButton.disabled = false;
-                loading.classList.remove('show');
             }
         });
 
