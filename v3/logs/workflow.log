@@ -144,3 +144,314 @@
 [2026-06-09 11:43:45] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:45] "GET /api/logs HTTP/1.1" 200 -
 [2026-06-09 11:43:48] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:48] "GET /api/logs HTTP/1.1" 200 -
 [2026-06-09 11:43:49] INFO: 127.0.0.1 - - [09/Jun/2026 11:43:49] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 19:09:18] INFO: ============================================================
+[2026-06-09 19:09:18] INFO: Starting bug workflow...
+[2026-06-09 19:09:18] INFO: ============================================================
+[2026-06-09 19:09:18] INFO: JQL Query: project = SCRUM AND status = "To Do" ORDER BY created DESC
+[2026-06-09 19:09:19] ERROR: Failed to fetch bugs from Jira: 410 Client Error: Gone for url: https://biswajitpaulckp2010.atlassian.net/rest/api/3/search?jql=project+%3D+SCRUM+AND+status+%3D+%22To+Do%22+ORDER+BY+created+DESC&maxResults=50&fields=key&fields=summary&fields=description&fields=assignee&fields=priority&fields=labels&fields=issuetype
+[2026-06-09 19:09:19] ERROR: ❌ Workflow failed: 410 Client Error: Gone for url: https://biswajitpaulckp2010.atlassian.net/rest/api/3/search?jql=project+%3D+SCRUM+AND+status+%3D+%22To+Do%22+ORDER+BY+created+DESC&maxResults=50&fields=key&fields=summary&fields=description&fields=assignee&fields=priority&fields=labels&fields=issuetype
+[2026-06-09 19:09:19] ERROR: Traceback (most recent call last):
+  File "E:\claude\sdlc workflow automation\sdlc_bug_workflow_automation\v3\bug_workflow_claude.py", line 397, in run
+    bugs = self.jira.get_new_bugs(self.project_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\claude\sdlc workflow automation\sdlc_bug_workflow_automation\v3\bug_workflow_claude.py", line 63, in get_new_bugs
+    response.raise_for_status()
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 410 Client Error: Gone for url: https://biswajitpaulckp2010.atlassian.net/rest/api/3/search?jql=project+%3D+SCRUM+AND+status+%3D+%22To+Do%22+ORDER+BY+created+DESC&maxResults=50&fields=key&fields=summary&fields=description&fields=assignee&fields=priority&fields=labels&fields=issuetype
+
+[2026-06-09 19:49:40] INFO: JiraClient initialized with base URL: https://biswajitpaulckp2010.atlassian.net
+[2026-06-09 19:49:40] INFO: ============================================================
+[2026-06-09 19:49:40] INFO: Starting bug workflow...
+[2026-06-09 19:49:40] INFO: ============================================================
+[2026-06-09 19:49:40] INFO: JQL Query: project = SCRUM AND status = "To Do" ORDER BY created DESC
+[2026-06-09 19:49:40] INFO: API Endpoint: https://biswajitpaulckp2010.atlassian.net/rest/api/3/search
+[2026-06-09 19:49:40] INFO: Sending request to Jira API...
+[2026-06-09 19:49:41] ERROR: ❌ 410 Gone Error - API endpoint not found
+[2026-06-09 19:49:41] ERROR: Check that:
+[2026-06-09 19:49:41] ERROR:   1. Base URL is correct (e.g., https://yourinstance.atlassian.net)
+[2026-06-09 19:49:41] ERROR:   2. Using /rest/api/3/search (not /rest/api/3/search/jql)
+[2026-06-09 19:49:41] ERROR:   3. Your Jira API token is valid and not expired
+[2026-06-09 19:49:41] ERROR: Failed to fetch bugs from Jira: 410 Gone - Invalid endpoint: https://biswajitpaulckp2010.atlassian.net/rest/api/3/search
+[2026-06-09 19:49:41] ERROR: ❌ Workflow failed: 410 Gone - Invalid endpoint: https://biswajitpaulckp2010.atlassian.net/rest/api/3/search
+[2026-06-09 19:49:41] ERROR: Traceback (most recent call last):
+  File "E:\claude\sdlc workflow automation\sdlc_bug_workflow_automation\v3\bug_workflow_claude.py", line 435, in run
+    bugs = self.jira.get_new_bugs(self.project_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\claude\sdlc workflow automation\sdlc_bug_workflow_automation\v3\bug_workflow_claude.py", line 80, in get_new_bugs
+    raise requests.RequestException(f"410 Gone - Invalid endpoint: {url}")
+requests.exceptions.RequestException: 410 Gone - Invalid endpoint: https://biswajitpaulckp2010.atlassian.net/rest/api/3/search
+
+[2026-06-09 19:57:50] INFO: JiraClient initialized with base URL: https://biswajitpaulckp2010.atlassian.net
+[2026-06-09 19:57:50] INFO: ============================================================
+[2026-06-09 19:57:50] INFO: Starting bug workflow (using Agile API)...
+[2026-06-09 19:57:50] INFO: ============================================================
+[2026-06-09 19:57:50] INFO: Fetching bugs for project: SCRUM
+[2026-06-09 19:57:50] INFO: Fetching Agile boards...
+[2026-06-09 19:57:51] INFO: Found 1 board(s)
+[2026-06-09 19:57:51] INFO:   - SCRUM board (ID: 1, Type: simple)
+[2026-06-09 19:57:51] INFO: Using board: SCRUM board (ID: 1)
+[2026-06-09 19:57:51] INFO: Fetching issues from board 1 with status 'To Do'...
+[2026-06-09 19:57:51] INFO: JQL: status = "To Do"
+[2026-06-09 19:57:51] INFO: Found 1 issues with status 'To Do'
+[2026-06-09 19:57:51] INFO: ✓ Parsed: SCRUM-7
+[2026-06-09 19:57:51] INFO: Successfully retrieved 1 bugs
+[2026-06-09 19:57:51] INFO: 
+============================================================
+[2026-06-09 19:57:51] INFO: Processing bug 1/1: SCRUM-7
+[2026-06-09 19:57:51] INFO: ============================================================
+[2026-06-09 19:57:51] INFO: Bug: SCRUM-7 - Fix login button - add loading indicator
+[2026-06-09 19:57:51] INFO: Priority: Medium | Status: To Do
+[2026-06-09 19:57:51] INFO: Marking SCRUM-7 as In Progress...
+[2026-06-09 19:57:51] INFO: Fetching available transitions for SCRUM-7...
+[2026-06-09 19:57:52] INFO: Available transitions: ['To Do', 'In Progress', 'In Review', 'Done']
+[2026-06-09 19:57:52] INFO: ✓ Found transition 'In Progress' with ID: 21
+[2026-06-09 19:57:53] INFO: ✓ Successfully marked SCRUM-7 as In Progress
+[2026-06-09 19:57:53] INFO: Step 1/3: Extracting GitHub URL...
+[2026-06-09 19:57:53] INFO: Found GitHub URL: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html|https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 19:57:53] INFO: Step 2/3: Fetching HTML file...
+[2026-06-09 19:57:53] INFO: Fetching HTML from GitHub...
+[2026-06-09 19:57:54] ERROR: Failed to fetch HTML: 404 Client Error: Not Found for url: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html%257Chttps:/raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 19:57:54] INFO: Step 3/3: Generating fixed code...
+[2026-06-09 19:57:54] INFO: Calling Claude API for SCRUM-7...
+[2026-06-09 19:58:24] ERROR: Failed to generate code: HTTPSConnectionPool(host='api.anthropic.com', port=443): Read timed out. (read timeout=30)
+[2026-06-09 19:58:24] ERROR: ✗ Failed to generate code
+[2026-06-09 19:58:26] INFO: 
+============================================================
+[2026-06-09 19:58:26] INFO: ✓ Workflow completed. Processed 0/1 bugs.
+[2026-06-09 19:58:26] INFO: ============================================================
+
+[2026-06-09 19:59:33] INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.103:5000
+[2026-06-09 19:59:33] INFO: [33mPress CTRL+C to quit[0m
+[2026-06-09 19:59:47] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:47] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 19:59:47] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:47] "GET /api/config HTTP/1.1" 200 -
+[2026-06-09 19:59:47] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:47] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 19:59:50] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:50] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 19:59:53] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:53] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 19:59:54] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:54] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 19:59:57] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:57] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 19:59:58] INFO: 127.0.0.1 - - [09/Jun/2026 19:59:58] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:00] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:00] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:03] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:03] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:03] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:03] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:06] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:06] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:08] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:08] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:09] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:09] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:12] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:12] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:12] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:12] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:14] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:14] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:17] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:17] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:17] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:17] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:20] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:20] "OPTIONS /api/trigger HTTP/1.1" 200 -
+[2026-06-09 20:00:20] INFO: JiraClient initialized with base URL: https://biswajitpaulckp2010.atlassian.net
+[2026-06-09 20:00:20] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:20] "POST /api/trigger HTTP/1.1" 200 -
+[2026-06-09 20:00:20] INFO: ============================================================
+[2026-06-09 20:00:20] INFO: Starting bug workflow (using Agile API)...
+[2026-06-09 20:00:20] INFO: ============================================================
+[2026-06-09 20:00:20] INFO: Fetching bugs for project: SCRUM
+[2026-06-09 20:00:20] INFO: Fetching Agile boards...
+[2026-06-09 20:00:20] INFO: Found 1 board(s)
+[2026-06-09 20:00:20] INFO:   - SCRUM board (ID: 1, Type: simple)
+[2026-06-09 20:00:20] INFO: Using board: SCRUM board (ID: 1)
+[2026-06-09 20:00:20] INFO: Fetching issues from board 1 with status 'To Do'...
+[2026-06-09 20:00:20] INFO: JQL: status = "To Do"
+[2026-06-09 20:00:21] INFO: Found 1 issues with status 'To Do'
+[2026-06-09 20:00:21] INFO: ✓ Parsed: SCRUM-7
+[2026-06-09 20:00:21] INFO: Successfully retrieved 1 bugs
+[2026-06-09 20:00:21] INFO: 
+============================================================
+[2026-06-09 20:00:21] INFO: Processing bug 1/1: SCRUM-7
+[2026-06-09 20:00:21] INFO: ============================================================
+[2026-06-09 20:00:21] INFO: Bug: SCRUM-7 - Fix login button - add loading indicator
+[2026-06-09 20:00:21] INFO: Priority: Medium | Status: To Do
+[2026-06-09 20:00:21] INFO: Marking SCRUM-7 as In Progress...
+[2026-06-09 20:00:21] INFO: Fetching available transitions for SCRUM-7...
+[2026-06-09 20:00:21] INFO: Available transitions: ['To Do', 'In Progress', 'In Review', 'Done']
+[2026-06-09 20:00:21] INFO: ✓ Found transition 'In Progress' with ID: 21
+[2026-06-09 20:00:21] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:21] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:22] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:22] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:22] INFO: ✓ Successfully marked SCRUM-7 as In Progress
+[2026-06-09 20:00:22] INFO: Step 1/3: Extracting GitHub URL...
+[2026-06-09 20:00:22] INFO: Found GitHub URL: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html|https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 20:00:22] INFO: Step 2/3: Fetching HTML file...
+[2026-06-09 20:00:22] INFO: Fetching HTML from GitHub...
+[2026-06-09 20:00:22] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:22] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:23] ERROR: Failed to fetch HTML: 404 Client Error: Not Found for url: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html%257Chttps:/raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 20:00:23] INFO: Step 3/3: Generating fixed code...
+[2026-06-09 20:00:23] INFO: Calling Claude API for SCRUM-7...
+[2026-06-09 20:00:23] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:23] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:26] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:26] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:27] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:27] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:29] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:29] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:32] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:32] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:32] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:32] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:35] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:35] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:37] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:37] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:38] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:38] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:41] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:41] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:42] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:42] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:44] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:44] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:47] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:47] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:47] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:47] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:50] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:50] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:52] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:52] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:53] ERROR: Failed to generate code: HTTPSConnectionPool(host='api.anthropic.com', port=443): Read timed out. (read timeout=30)
+[2026-06-09 20:00:53] ERROR: ✗ Failed to generate code
+[2026-06-09 20:00:53] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:53] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:55] INFO: 
+============================================================
+[2026-06-09 20:00:55] INFO: ✓ Workflow completed. Processed 0/1 bugs.
+[2026-06-09 20:00:55] INFO: ============================================================
+
+[2026-06-09 20:00:56] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:56] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:00:57] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:57] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:00:59] INFO: 127.0.0.1 - - [09/Jun/2026 20:00:59] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:01:02] INFO: 127.0.0.1 - - [09/Jun/2026 20:01:02] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:01:02] INFO: 127.0.0.1 - - [09/Jun/2026 20:01:02] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:01:05] INFO: 127.0.0.1 - - [09/Jun/2026 20:01:05] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:01:07] INFO: 127.0.0.1 - - [09/Jun/2026 20:01:07] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:01:08] INFO: 127.0.0.1 - - [09/Jun/2026 20:01:08] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:01:11] INFO: 127.0.0.1 - - [09/Jun/2026 20:01:11] "GET /api/logs HTTP/1.1" 200 -
+[2026-06-09 20:01:12] INFO: 127.0.0.1 - - [09/Jun/2026 20:01:12] "GET /api/status HTTP/1.1" 200 -
+[2026-06-09 20:04:10] INFO: JiraClient initialized with base URL: https://biswajitpaulckp2010.atlassian.net
+[2026-06-09 20:04:10] INFO: ============================================================
+[2026-06-09 20:04:10] INFO: Starting bug workflow (using Agile API)...
+[2026-06-09 20:04:10] INFO: ============================================================
+[2026-06-09 20:04:10] INFO: Fetching bugs for project: SCRUM
+[2026-06-09 20:04:10] INFO: Fetching Agile boards...
+[2026-06-09 20:04:10] INFO: Found 1 board(s)
+[2026-06-09 20:04:10] INFO:   - SCRUM board (ID: 1, Type: simple)
+[2026-06-09 20:04:10] INFO: Using board: SCRUM board (ID: 1)
+[2026-06-09 20:04:10] INFO: Fetching issues from board 1 with status 'To Do'...
+[2026-06-09 20:04:10] INFO: JQL: status = "To Do"
+[2026-06-09 20:04:11] INFO: Found 1 issues with status 'To Do'
+[2026-06-09 20:04:11] INFO: ✓ Parsed: SCRUM-7
+[2026-06-09 20:04:11] INFO: Successfully retrieved 1 bugs
+[2026-06-09 20:04:11] INFO: 
+============================================================
+[2026-06-09 20:04:11] INFO: Processing bug 1/1: SCRUM-7
+[2026-06-09 20:04:11] INFO: ============================================================
+[2026-06-09 20:04:11] INFO: Bug: SCRUM-7 - Fix login button - add loading indicator
+[2026-06-09 20:04:11] INFO: Priority: Medium | Status: To Do
+[2026-06-09 20:04:11] INFO: Step 1/3: Extracting GitHub URL...
+[2026-06-09 20:04:11] INFO: Found GitHub URL: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html|https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 20:04:11] INFO: Step 2/3: Fetching HTML file...
+[2026-06-09 20:04:11] INFO: Fetching HTML from GitHub...
+[2026-06-09 20:04:12] ERROR: Failed to fetch HTML: 404 Client Error: Not Found for url: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html%257Chttps:/raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 20:04:12] WARNING: ⚠ Could not fetch HTML, but continuing with bug description...
+[2026-06-09 20:04:12] INFO: Step 3/3: Generating fixed code...
+[2026-06-09 20:04:12] INFO: Calling Claude API for SCRUM-7...
+[2026-06-09 20:04:54] INFO: ✓ Generated fixed HTML for SCRUM-7
+[2026-06-09 20:04:54] INFO: Step 4/3: Marking bug as In Progress...
+[2026-06-09 20:04:54] INFO: Marking SCRUM-7 as In Progress...
+[2026-06-09 20:04:54] INFO: Fetching available transitions for SCRUM-7...
+[2026-06-09 20:04:54] INFO: Available transitions: ['To Do', 'In Progress', 'In Review', 'Done']
+[2026-06-09 20:04:54] INFO: ✓ Found transition 'In Progress' with ID: 21
+[2026-06-09 20:04:55] INFO: ✓ Successfully marked SCRUM-7 as In Progress
+[2026-06-09 20:04:55] INFO: ✓ File saved: fixed_files\SCRUM-7_Fix login button - add loading indicator.html
+[2026-06-09 20:04:55] INFO: ✓ Completed: SCRUM-7
+[2026-06-09 20:04:57] INFO: 
+============================================================
+[2026-06-09 20:04:57] INFO: ✓ Workflow completed. Processed 1/1 bugs.
+[2026-06-09 20:04:57] INFO: ============================================================
+
+[2026-06-09 20:05:51] INFO: JiraClient initialized with base URL: https://biswajitpaulckp2010.atlassian.net
+[2026-06-09 20:05:51] INFO: ============================================================
+[2026-06-09 20:05:51] INFO: Starting bug workflow (using Agile API)...
+[2026-06-09 20:05:51] INFO: ============================================================
+[2026-06-09 20:05:51] INFO: Fetching bugs for project: SCRUM
+[2026-06-09 20:05:51] INFO: Fetching Agile boards...
+[2026-06-09 20:05:51] INFO: Found 1 board(s)
+[2026-06-09 20:05:51] INFO:   - SCRUM board (ID: 1, Type: simple)
+[2026-06-09 20:05:51] INFO: Using board: SCRUM board (ID: 1)
+[2026-06-09 20:05:51] INFO: Fetching issues from board 1 with status 'To Do'...
+[2026-06-09 20:05:51] INFO: JQL: status = "To Do"
+[2026-06-09 20:05:52] INFO: Found 0 issues with status 'To Do'
+[2026-06-09 20:05:52] INFO: Successfully retrieved 0 bugs
+[2026-06-09 20:05:52] INFO: No bugs found with 'To Do' status.
+[2026-06-09 20:06:17] INFO: JiraClient initialized with base URL: https://biswajitpaulckp2010.atlassian.net
+[2026-06-09 20:06:17] INFO: ============================================================
+[2026-06-09 20:06:17] INFO: Starting bug workflow (using Agile API)...
+[2026-06-09 20:06:17] INFO: ============================================================
+[2026-06-09 20:06:17] INFO: Fetching bugs for project: SCRUM
+[2026-06-09 20:06:17] INFO: Fetching Agile boards...
+[2026-06-09 20:06:18] INFO: Found 1 board(s)
+[2026-06-09 20:06:18] INFO:   - SCRUM board (ID: 1, Type: simple)
+[2026-06-09 20:06:18] INFO: Using board: SCRUM board (ID: 1)
+[2026-06-09 20:06:18] INFO: Fetching issues from board 1 with status 'To Do'...
+[2026-06-09 20:06:18] INFO: JQL: status = "To Do"
+[2026-06-09 20:06:18] INFO: Found 1 issues with status 'To Do'
+[2026-06-09 20:06:18] INFO: ✓ Parsed: SCRUM-7
+[2026-06-09 20:06:18] INFO: Successfully retrieved 1 bugs
+[2026-06-09 20:06:18] INFO: 
+============================================================
+[2026-06-09 20:06:18] INFO: Processing bug 1/1: SCRUM-7
+[2026-06-09 20:06:18] INFO: ============================================================
+[2026-06-09 20:06:18] INFO: Bug: SCRUM-7 - Fix login button - add loading indicator
+[2026-06-09 20:06:18] INFO: Priority: Medium | Status: To Do
+[2026-06-09 20:06:18] INFO: Step 1/3: Extracting GitHub URL...
+[2026-06-09 20:06:18] INFO: Found GitHub URL: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html|https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 20:06:18] INFO: Step 2/3: Fetching HTML file...
+[2026-06-09 20:06:18] INFO: Fetching HTML from GitHub...
+[2026-06-09 20:06:19] ERROR: Failed to fetch HTML: 404 Client Error: Not Found for url: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html%257Chttps:/raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 20:06:19] WARNING: ⚠ Could not fetch HTML, but continuing with bug description...
+[2026-06-09 20:06:19] INFO: Step 3/3: Generating fixed code...
+[2026-06-09 20:06:19] INFO: Calling Claude API for SCRUM-7...
+[2026-06-09 20:06:46] INFO: ✓ Generated fixed HTML for SCRUM-7
+[2026-06-09 20:07:12] INFO: Step 4/3: Marking bug as In Progress...
+[2026-06-09 20:07:12] INFO: Marking SCRUM-7 as In Progress...
+[2026-06-09 20:07:12] INFO: Fetching available transitions for SCRUM-7...
+[2026-06-09 20:07:13] INFO: Available transitions: ['To Do', 'In Progress', 'In Review', 'Done']
+[2026-06-09 20:07:13] INFO: ✓ Found transition 'In Progress' with ID: 21
+[2026-06-09 20:07:13] INFO: ✓ Successfully marked SCRUM-7 as In Progress
+[2026-06-09 20:07:13] INFO: ✓ File saved: fixed_files\SCRUM-7_Fix login button - add loading indicator.html
+[2026-06-09 20:07:13] INFO: ✓ Completed: SCRUM-7
+[2026-06-09 20:07:15] INFO: 
+============================================================
+[2026-06-09 20:07:15] INFO: ✓ Workflow completed. Processed 1/1 bugs.
+[2026-06-09 20:07:15] INFO: ============================================================
+
+[2026-06-09 20:09:52] INFO: JiraClient initialized with base URL: https://biswajitpaulckp2010.atlassian.net
+[2026-06-09 20:09:52] INFO: ============================================================
+[2026-06-09 20:09:52] INFO: Starting bug workflow (using Agile API)...
+[2026-06-09 20:09:52] INFO: ============================================================
+[2026-06-09 20:09:52] INFO: Fetching bugs for project: SCRUM
+[2026-06-09 20:09:52] INFO: Fetching Agile boards...
+[2026-06-09 20:09:52] INFO: Found 1 board(s)
+[2026-06-09 20:09:52] INFO:   - SCRUM board (ID: 1, Type: simple)
+[2026-06-09 20:09:52] INFO: Using board: SCRUM board (ID: 1)
+[2026-06-09 20:09:52] INFO: Fetching issues from board 1 with status 'To Do'...
+[2026-06-09 20:09:52] INFO: JQL: status = "To Do"
+[2026-06-09 20:09:53] INFO: Found 1 issues with status 'To Do'
+[2026-06-09 20:09:53] INFO: ✓ Parsed: SCRUM-7
+[2026-06-09 20:09:53] INFO: Successfully retrieved 1 bugs
+[2026-06-09 20:09:53] INFO: 
+============================================================
+[2026-06-09 20:09:53] INFO: Processing bug 1/1: SCRUM-7
+[2026-06-09 20:09:53] INFO: ============================================================
+[2026-06-09 20:09:53] INFO: Bug: SCRUM-7 - Fix login button - add loading indicator
+[2026-06-09 20:09:53] INFO: Priority: Medium | Status: To Do
+[2026-06-09 20:09:53] INFO: Step 1/3: Extracting GitHub URL...
+[2026-06-09 20:09:53] INFO: Found GitHub URL: https://raw.githubusercontent.com/biswajitpaul04/sdlc_bug_workflow_automation/main/v3/bug_codebase/src/login.html
+[2026-06-09 20:09:53] INFO: Step 2/3: Fetching HTML file...
+[2026-06-09 20:09:53] INFO: Fetching HTML from GitHub...
+[2026-06-09 20:09:53] INFO: ✓ Successfully fetched HTML (8432 bytes)
+[2026-06-09 20:09:53] INFO: Step 3/3: Generating fixed code...
+[2026-06-09 20:09:53] INFO: Calling Claude API for SCRUM-7...
+[2026-06-09 20:10:19] INFO: ✓ Generated fixed HTML for SCRUM-7
+[2026-06-09 20:10:19] INFO: Step 4/3: Marking bug as In Progress...
+[2026-06-09 20:10:19] INFO: Marking SCRUM-7 as In Progress...
+[2026-06-09 20:10:19] INFO: Fetching available transitions for SCRUM-7...
+[2026-06-09 20:10:20] INFO: Available transitions: ['To Do', 'In Progress', 'In Review', 'Done']
+[2026-06-09 20:10:20] INFO: ✓ Found transition 'In Progress' with ID: 21
+[2026-06-09 20:10:20] INFO: ✓ Successfully marked SCRUM-7 as In Progress
+[2026-06-09 20:10:20] INFO: ✓ File saved: fixed_files\SCRUM-7_Fix login button - add loading indicator.html
+[2026-06-09 20:10:20] INFO: ✓ Completed: SCRUM-7
+[2026-06-09 20:10:22] INFO: 
+============================================================
+[2026-06-09 20:10:22] INFO: ✓ Workflow completed. Processed 1/1 bugs.
+[2026-06-09 20:10:22] INFO: ============================================================
+

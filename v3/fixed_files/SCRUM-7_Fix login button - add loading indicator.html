@@ -143,15 +143,22 @@
             transform: none;
         }
 
+        /* Spinner styles */
         .spinner {
             display: none;
             width: 18px;
             height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.4);
             border-top-color: #ffffff;
             border-radius: 50%;
-            animation: spin 0.75s linear infinite;
+            animation: spin 0.8s linear infinite;
             flex-shrink: 0;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .login-button.loading .spinner {
@@ -159,12 +166,7 @@
         }
 
         .login-button.loading .button-text {
-            display: inline;
-        }
-
-        @keyframes spin {
-            0%   { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            display: inline-block;
         }
 
         .signup-link {
@@ -242,8 +244,8 @@
             </div>
 
             <button type="submit" class="login-button" id="loginButton">
-                <span class="spinner" id="spinner"></span>
-                <span class="button-text" id="buttonText">Sign In</span>
+                <span class="spinner" id="loginSpinner"></span>
+                <span class="button-text" id="loginButtonText">Sign In</span>
             </button>
         </form>
 
@@ -255,23 +257,23 @@
     <script>
         const loginForm = document.getElementById('loginForm');
         const loginButton = document.getElementById('loginButton');
+        const loginSpinner = document.getElementById('loginSpinner');
+        const loginButtonText = document.getElementById('loginButtonText');
         const errorMessage = document.getElementById('errorMessage');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
-        const spinner = document.getElementById('spinner');
-        const buttonText = document.getElementById('buttonText');
 
         function setLoading(isLoading) {
             if (isLoading) {
                 loginButton.disabled = true;
                 loginButton.classList.add('loading');
-                spinner.style.display = 'inline-block';
-                buttonText.textContent = 'Signing In...';
+                loginSpinner.style.display = 'inline-block';
+                loginButtonText.textContent = 'Signing In...';
             } else {
                 loginButton.disabled = false;
                 loginButton.classList.remove('loading');
-                spinner.style.display = 'none';
-                buttonText.textContent = 'Sign In';
+                loginSpinner.style.display = 'none';
+                loginButtonText.textContent = 'Sign In';
             }
         }
 
